@@ -8,8 +8,8 @@ MAINTAINER Erik Henrikson <erik.henrikson@emc.com>
 RUN zypper --non-interactive install keepalived wget openssh-fips telnet aaa_base arping2 python python-base mozilla-nss sudo ipcalc java-1_7_0-openjdk
 
 # Need to get sipcalc - using "unstable" one from opensuse
-RUN wget http://download.opensuse.org/repositories/home:/seife:/testing/openSUSE_13.2/x86_64/sipcalc-1.1.6-5.1.x86_64.rpm && \
-	rpm -Uvh --nodeps sipcalc-1.1.6-5.1.x86_64.rpm && \
+ADD http://download.opensuse.org/repositories/home:/seife:/testing/openSUSE_13.2/x86_64/sipcalc-1.1.6-5.1.x86_64.rpm /
+RUN rpm -Uvh --nodeps sipcalc-1.1.6-5.1.x86_64.rpm && \
  	rm -f sipcalc-1.1.6-5.1.x86_64.rpm
 
 # Create users/groups
