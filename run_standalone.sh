@@ -30,7 +30,7 @@ for i in db geodb zk ; do
        echo "creating directory /data/$i"
        mkdir ${DATA_DIR}/$i
   fi
-  chown storageos:storageos ${DATA_DIR}/$i
+  chmod 777 ${DATA_DIR}/$i
 done
 
 # Start the container
