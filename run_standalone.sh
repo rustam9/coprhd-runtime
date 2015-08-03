@@ -16,6 +16,13 @@ if ${CLEANUP_OLD}; then
     iptables -F DOCKER -t nat
 fi
 
+# Ensure that pipework is installed
+/usr/bin/which pipework 2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+    curl https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework > /usr/local/bin/pipework
+    chmod +x /usr/local/bin/pipework
+fi 
+
 # Ensure that the /data/db:geodb:zk directories exist and have proper ownership
 for i in db geodb zk ; do
   if [ ! -d ${DATA_DIR}/$i ]
@@ -27,7 +34,7 @@ for i in db geodb zk ; do
 done
 
 # Start the container
-CONTAINER_ID=$(docker run --net=none -ti --privileged -v ${SETUP_DIR}:/coprhd:ro -v ${DATA_DIR}:/data:rw -d coprhd-runtime)
+CONTAINER_ID=$(docker run --net=none -ti --privileged -v ${SETUP_DIR}:/coprhd:ro -v ${DATA_DIR}:/data:rw -d rustam9/coprhd-runtime)
 echo "Created container ${CONTAINER_ID}"
 
 # Configure the container and install storageos rpm

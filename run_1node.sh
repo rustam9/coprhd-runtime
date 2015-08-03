@@ -17,6 +17,13 @@ if ${CLEANUP_OLD}; then
     iptables -F DOCKER -t nat
 fi
 
+# Ensure that pipework is installed
+/usr/bin/which pipework 2>&1 > /dev/null
+if [ $? -ne 0 ]; then
+    curl https://raw.githubusercontent.com/jpetazzo/pipework/master/pipework > /usr/local/bin/pipework
+    chmod +x /usr/local/bin/pipework
+fi
+
 # Ensure that the /data/db:geodb:zk directories exist and have proper ownership
 for i in db geodb zk ; do
   if [ ! -d ${DATA_DIR}/$i ]
